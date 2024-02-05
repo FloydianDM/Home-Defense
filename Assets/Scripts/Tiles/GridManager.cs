@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,10 +14,35 @@ namespace HomeDefense
         private List<Vector3Int> _spawnableCoordinates = new List<Vector3Int>();
         public Dictionary<TileBase, TileData> TileDict { get; private set; }
         public Tilemap Map => _map;
+        public Dictionary<Vector3Int, bool> PlaceableCoordinatesDict;
+        public event Action OnTouched;
 
         private void Awake()
         {
             InitializeTileDict();
+            SetPlaceableTiles();
+        }
+
+        private void Update()
+        {
+            ProcessInput();
+        }
+
+        private void ProcessInput()
+        {
+            if (Touchscreen.current.primaryTouch.press.isPressed)
+            {
+                if (OnTouched != null)
+                {
+                    OnTouched();
+                }
+                
+                GetClickedTilePosition();
+            }
+            else
+            {
+                return;
+            } 
         }
 
         private void InitializeTileDict()
@@ -57,22 +83,6 @@ namespace HomeDefense
             return TileDict[tile].WalkingSpeed;
         }
 
-        public bool IsTileSpawnable(Vector2 position)
-        {
-            Vector3Int gridPosition = GetTilePosition(position);
-            TileBase tile = _map.GetTile(gridPosition);
-
-            return TileDict[tile].IsSpawnable;
-        }
-
-        public TileBase GetClickedTileType()
-        { 
-            Vector3Int gridPosition = GetClickedTilePosition();
-            TileBase clickedTile = _map.GetTile(gridPosition);
-
-            return clickedTile;
-        }
-
         public Vector3 GetRandomSpawnPoint()
         {
             for (int x = _map.cellBounds.xMin; x < _map.cellBounds.xMax; x++)
@@ -93,12 +103,34 @@ namespace HomeDefense
                 }
             }
 
-            int randomTileIndex = Random.Range(0, _spawnableCoordinates.Count);
+            int randomTileIndex = UnityEngine.Random.Range(0, _spawnableCoordinates.Count);
             Vector3Int randomCoordinate = _spawnableCoordinates[randomTileIndex];
 
             Vector3 worldRandomCoordinate = _map.CellToWorld(randomCoordinate);
 
             return worldRandomCoordinate;
+        }
+
+        private void SetPlaceableTiles()
+        {
+            PlaceableCoordinatesDict = new Dictionary<Vector3Int, bool>();
+
+            for (int x = _map.cellBounds.xMin; x < _map.cellBounds.xMax; x++)
+            {
+                for (int y = _map.cellBounds.yMin; y < _map.cellBounds.yMax; y++)
+                {
+                    TileBase tile = _map.GetTile(new Vector3Int(x, y));
+                    
+                    if (!TileDict[tile].IsSpawnable)
+                    {
+                        PlaceableCoordinatesDict[new Vector3Int(x, y)] = true; 
+                    }
+                    else
+                    {
+                        PlaceableCoordinatesDict[new Vector3Int(x, y)] = false; 
+                    }
+                }
+            }
         }
     }
 }

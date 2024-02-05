@@ -4,7 +4,7 @@ namespace HomeDefense
 {
     public class Defense : MonoBehaviour
     {
-        [SerializeField] private int defenseCost = 10;
+        [SerializeField] private int _defenseCost = 10;
 
         public bool CanCreateDefense(Defense defense, Vector3 createPosition)
         {
@@ -15,11 +15,10 @@ namespace HomeDefense
                 return false;
             }
 
-            if (currencySystem.CurrentBalance >= defenseCost)
+            if (currencySystem.CurrentBalance >= _defenseCost)
             {
-                currencySystem.WithdrawMoney(defenseCost);
-                
-                // TODO: Instantiate tower
+                currencySystem.WithdrawMoney(_defenseCost);
+                Instantiate(defense, createPosition, Quaternion.identity);
 
                 return true;
             }
