@@ -121,7 +121,7 @@ namespace HomeDefense
                 {
                     TileBase tile = _map.GetTile(new Vector3Int(x, y));
                     
-                    if (!TileDict[tile].IsSpawnable)
+                    if (!TileDict[tile].IsWalkable)
                     {
                         PlaceableCoordinatesDict[new Vector3Int(x, y)] = true; 
                     }

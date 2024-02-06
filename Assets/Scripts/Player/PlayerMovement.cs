@@ -22,6 +22,8 @@ namespace HomeDefense
             bool isPlaceable = _gridManager.PlaceableCoordinatesDict[tilePosition];
             Vector3 clickedWorldPosition = _gridManager.Map.CellToWorld(tilePosition);
 
+            Debug.Log(isPlaceable);
+
             if (isPlaceable)
             {
                 bool isPlaced = _defense.CanCreateDefense(_defense, clickedWorldPosition);

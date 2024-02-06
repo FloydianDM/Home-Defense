@@ -6,14 +6,16 @@ namespace HomeDefense
 {
     public class EnemyMovement : MonoBehaviour
     {
+        //  Set enemy gameobject false on path end (reduce point)
+
         private GridManager _gridManager;
         private readonly List<Vector2> _enemyPath = new List<Vector2>();
         private Vector3 _cellSize;
 
-        private void Start()
-        {
+        private void OnEnable()
+        {   
             _gridManager = FindObjectOfType<GridManager>();
-            _cellSize = _gridManager.Map.cellSize;
+            _cellSize = _gridManager.Map.cellSize;    
 
             FindPath();  
             StartCoroutine(FollowPath());

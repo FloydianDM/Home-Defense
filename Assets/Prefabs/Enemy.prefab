@@ -10,7 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3777511713761018031}
   - component: {fileID: 5739287506778682037}
+  - component: {fileID: 2929146446839013187}
+  - component: {fileID: 2196698444906364944}
   - component: {fileID: 436058651199379038}
+  - component: {fileID: 9100965382963345930}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -85,6 +88,55 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &2929146446839013187
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412493567681780204}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!114 &2196698444906364944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412493567681780204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6a90f3f5e1514b7298c68204f1f625d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyReward: 50
+  _enemyPenalty: 50
 --- !u!114 &436058651199379038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,4 +149,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f29fb3b121c4a64891b2f9e6c23bbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnPoints: []
+--- !u!114 &9100965382963345930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412493567681780204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 975adc3078998401fbb94a1051c93ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHitPoint: 3
+  _difficultyMultiplier: 1

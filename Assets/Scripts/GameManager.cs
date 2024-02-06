@@ -7,6 +7,9 @@ namespace HomeDefense
     {   
         public static GameManager Instance;
 
+        private const string GameMenu = "Scene_Menu";
+        private const string GameStart = "Scene_Game";
+
         private void Awake()
         {
             ManageSingleton();
@@ -26,9 +29,19 @@ namespace HomeDefense
             }
         }
 
+        public void StartGame()
+        {
+            SceneManager.LoadScene(GameStart);
+        }
+
         public void LoseGame()
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(GameMenu);
+        }
+
+        public void QuitGame()
+        {
+            Application.Quit();
         }
     }  
 }

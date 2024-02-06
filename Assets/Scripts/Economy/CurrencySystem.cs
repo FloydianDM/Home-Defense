@@ -33,7 +33,6 @@ namespace HomeDefense
                 _gameManager.LoseGame();
             }
         }
-    }
-    
+    }    
 }
 
