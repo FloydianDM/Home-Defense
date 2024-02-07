@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace HomeDefense
@@ -8,6 +9,7 @@ namespace HomeDefense
 
         public int CurrentBalance { get; private set; }
         private GameManager _gameManager;
+        public event Action OnCurrencyChange;
 
         private void Awake()
         {
@@ -22,12 +24,16 @@ namespace HomeDefense
         public void DepositMoney(int amount)
         {
             CurrentBalance += Mathf.Abs(amount);
+
+            OnCurrencyChange?.Invoke();
         }
 
         public void WithdrawMoney(int amount)
         {
             CurrentBalance -= Mathf.Abs(amount);
         
+            OnCurrencyChange?.Invoke();
+            
             if (CurrentBalance <= 0)
             {
                 _gameManager.LoseGame();
