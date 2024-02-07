@@ -11,9 +11,9 @@ namespace HomeDefense
         [SerializeField] private Tilemap _map;
         [SerializeField] private List<TileData> _tileDataList;
     
+        public Tilemap Map => _map;
         private List<Vector3Int> _spawnableCoordinates = new List<Vector3Int>();
         public Dictionary<TileBase, TileData> TileDict { get; private set; }
-        public Tilemap Map => _map;
         public Dictionary<Vector3Int, bool> PlaceableCoordinatesDict;
         public event Action OnTouched;
 

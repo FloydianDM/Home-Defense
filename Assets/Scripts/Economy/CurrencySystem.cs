@@ -9,6 +9,7 @@ namespace HomeDefense
 
         public int CurrentBalance { get; private set; }
         private GameManager _gameManager;
+        public const string MaxScoreKey = "Max Score";
         public event Action OnCurrencyChange;
 
         private void Awake()
@@ -33,10 +34,20 @@ namespace HomeDefense
             CurrentBalance -= Mathf.Abs(amount);
         
             OnCurrencyChange?.Invoke();
-            
+
             if (CurrentBalance <= 0)
             {
                 _gameManager.LoseGame();
+            }
+        }
+
+        private void OnDestroy()
+        {
+            int currentHighScore = PlayerPrefs.GetInt(MaxScoreKey, 0);
+
+            if (CurrentBalance > currentHighScore)
+            {
+                PlayerPrefs.SetInt(MaxScoreKey, CurrentBalance);
             }
         }
     }    

@@ -7,18 +7,14 @@ namespace HomeDefense
     public class ObjectPool : MonoBehaviour
     {
         [SerializeField] private GameObject _enemy;
-        [SerializeField] [Range(0,50)] private int _poolSize = 5;
+        [SerializeField] [Range(0, 50)] private int _poolSize = 5;
         [SerializeField] [Range(0.1f, 20f)] private float _spawnTime = 1f;
 
         private GameObject[] _pool;
 
-        private void Awake()
-        {
-            PopulatePool();
-        }
-
         private void Start()
         {
+            PopulatePool();
             StartCoroutine(SpawnEnemies());
         }
 
