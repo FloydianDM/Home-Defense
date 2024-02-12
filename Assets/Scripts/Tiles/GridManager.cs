@@ -12,6 +12,7 @@ namespace HomeDefense
         [SerializeField] private List<TileData> _tileDataList;
     
         public Tilemap Map => _map;
+        private List<Vector3Int> _endPointCoordinates = new List<Vector3Int>();
         private List<Vector3Int> _spawnableCoordinates = new List<Vector3Int>();
         public Dictionary<TileBase, TileData> TileDict { get; private set; }
         public Dictionary<Vector3Int, bool> PlaceableCoordinatesDict;
@@ -21,6 +22,7 @@ namespace HomeDefense
         {
             InitializeTileDict();
             SetPlaceableTiles();
+            SetFinishTiles();
         }
 
         private void Update()
@@ -93,7 +95,7 @@ namespace HomeDefense
                     
                     if (TileDict[tile].IsSpawnable)
                     {
-                        var tilePosition = new Vector3Int(x, y);
+                        Vector3Int tilePosition = new Vector3Int(x, y);
 
                         if (!_spawnableCoordinates.Contains(tilePosition))
                         {
@@ -106,7 +108,7 @@ namespace HomeDefense
             int randomTileIndex = UnityEngine.Random.Range(0, _spawnableCoordinates.Count);
             Vector3Int randomCoordinate = _spawnableCoordinates[randomTileIndex];
 
-            Vector3 worldRandomCoordinate = _map.CellToWorld(randomCoordinate);
+            Vector3 worldRandomCoordinate = _map.GetCellCenterWorld(randomCoordinate);
 
             return worldRandomCoordinate;
         }
@@ -119,17 +121,47 @@ namespace HomeDefense
             {
                 for (int y = _map.cellBounds.yMin; y < _map.cellBounds.yMax; y++)
                 {
-                    TileBase tile = _map.GetTile(new Vector3Int(x, y));
+                    Vector3Int tilePosition = new Vector3Int(x, y);
+                    TileBase tile = _map.GetTile(tilePosition);
                     
                     if (!TileDict[tile].IsWalkable)
                     {
-                        PlaceableCoordinatesDict[new Vector3Int(x, y)] = true; 
+                        PlaceableCoordinatesDict[tilePosition] = true; 
                     }
                     else
                     {
-                        PlaceableCoordinatesDict[new Vector3Int(x, y)] = false; 
+                        PlaceableCoordinatesDict[tilePosition] = false; 
                     }
                 }
+            }
+        }
+
+        private void SetFinishTiles()
+        {
+            FlagCreator flagCreator = GetComponent<FlagCreator>();
+
+            for (int x = _map.cellBounds.xMin; x < _map.cellBounds.xMax; x++)
+            {
+                for (int y = _map.cellBounds.yMin; y < _map.cellBounds.yMax; y++)
+                {
+                    TileBase tile = _map.GetTile(new Vector3Int(x, y));
+
+                    if (TileDict[tile].IsEndPoint)
+                    {
+                        Vector3Int tilePosition = new Vector3Int(x, y);
+                    
+                        if (!_endPointCoordinates.Contains(tilePosition))
+                        {
+                            _endPointCoordinates.Add(tilePosition);
+                        }
+                    }
+                }
+            }
+
+            foreach (Vector3Int tilePosition in _endPointCoordinates)
+            {
+                Vector3 worldTilePosition = _map.GetCellCenterWorld(tilePosition);
+                flagCreator.CreateFlag(FlagType.EndFlag, worldTilePosition);
             }
         }
     }

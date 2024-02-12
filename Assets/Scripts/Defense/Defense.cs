@@ -5,6 +5,20 @@ namespace HomeDefense
     public class Defense : MonoBehaviour
     {
         [SerializeField] private int _defenseCost = 10;
+        [SerializeField] private float _lifeTime = 30f;
+
+        private float _timer = 0;
+        private GridManager _gridManager;
+
+        private void Start()
+        {
+            _gridManager = FindObjectOfType<GridManager>();
+        }
+
+        private void Update()
+        {
+            SetTimer();
+        }
 
         public bool CanCreateDefense(Defense defense, Vector3 createPosition)
         {
@@ -24,6 +38,19 @@ namespace HomeDefense
             }
 
             return false;
+        }
+
+        private void SetTimer()
+        {
+            _timer += Time.deltaTime;
+            
+            if (_timer >= _lifeTime)
+            {
+                Vector3Int tilePosition =  _gridManager.GetTilePosition(transform.position);
+                _gridManager.PlaceableCoordinatesDict[tilePosition] = true;
+
+                Destroy(gameObject);
+            }
         }
     }   
 }

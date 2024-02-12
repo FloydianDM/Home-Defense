@@ -23,7 +23,7 @@ namespace HomeDefense
 
         private void OnParticleCollision(GameObject other)
         {
-            if (!other.gameObject.CompareTag("Ammo"))
+            if (!other.CompareTag("Ammo"))
             {
                 return;
             }
@@ -31,7 +31,7 @@ namespace HomeDefense
             ProcessHit();
         }
 
-        private void ProcessHit()
+        public void ProcessHit()
         {
             _enemyHitPoints--;
 

@@ -10,6 +10,7 @@ namespace HomeDefense
         public bool IsWalkable;
         public float WalkingSpeed;
         public bool IsSpawnable;
+        public bool IsEndPoint;
     } 
 }
 

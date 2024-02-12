@@ -15,12 +15,12 @@ namespace HomeDefense
             _gridManager.OnTouched += InstantiateDefense;
         }
 
-        public void InstantiateDefense()
+        private void InstantiateDefense()
         {
             Vector3Int tilePosition = _gridManager.GetClickedTilePosition();
             
             bool isPlaceable = _gridManager.PlaceableCoordinatesDict[tilePosition];
-            Vector3 clickedWorldPosition = _gridManager.Map.CellToWorld(tilePosition);
+            Vector3 clickedWorldPosition = _gridManager.Map.GetCellCenterWorld(tilePosition);
 
             if (isPlaceable)
             {

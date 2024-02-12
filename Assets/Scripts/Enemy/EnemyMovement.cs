@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace HomeDefense
 {
+    [RequireComponent(typeof(Enemy))]
     public class EnemyMovement : MonoBehaviour
     {
         //  Set enemy gameobject false on path end (reduce point)
@@ -39,14 +40,11 @@ namespace HomeDefense
                 {
                     travelPercent += Time.deltaTime * _gridManager.GetTileSpeed(transform.position);
                     transform.position = Vector2.Lerp(startPosition, endPosition, travelPercent);
-
-                    StealMoney(); // Bug Found!!!
                     
                     yield return new WaitForEndOfFrame();
                 }
             }
         }
-
 
         private void FindPath()
         {
@@ -57,18 +55,14 @@ namespace HomeDefense
             for (int i = 1; i < _gridManager.Map.size.x; i++)
             {
                 float nextCell = i * _cellSize.x;
-
                 _enemyPath.Add(new Vector2(enemyStartPosition.x + nextCell, enemyStartPosition.y));
             }
         }
       
-        private void StealMoney()
+        public void StealMoney()
         {
-            if ((Vector2)transform.position == _enemyPath[_enemyPath.Count - 1])
-            {
-                Debug.Log("Steal Money");
-                _currencySystem.WithdrawMoney(100);
-            }
+            _currencySystem.WithdrawMoney(100);
+            gameObject.SetActive(false);            
         }
     }
 }

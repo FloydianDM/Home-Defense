@@ -7,8 +7,9 @@ namespace HomeDefense
     {   
         public static GameManager Instance;
 
-        private const string GameMenu = "Scene_Menu";
-        private const string GameStart = "Scene_Game";
+        private const string GAME_MENU = "Scene_Menu";
+        private const string GAME_START = "Scene_Game";
+        private const string GAME_OVER = "Scene_GameOver";
 
         private void Awake()
         {
@@ -31,12 +32,12 @@ namespace HomeDefense
 
         public void StartGame()
         {
-            SceneManager.LoadScene(GameStart);
+            SceneManager.LoadScene(GAME_START);
         }
 
         public void LoseGame()
         {
-            SceneManager.LoadScene(GameMenu);
+            SceneManager.LoadScene(GAME_OVER);
         }
 
         public void QuitGame()

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -38,7 +36,7 @@ namespace HomeDefense
                 return;
             }
 
-            _highScoreText.text = $"High Score: {PlayerPrefs.GetInt(CurrencySystem.MaxScoreKey)}";
+            _highScoreText.text = $"High Score: {PlayerPrefs.GetInt(CurrencySystem.MAX_SCORE_KEY)}";
         }
     }
 }

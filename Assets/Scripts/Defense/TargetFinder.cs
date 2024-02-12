@@ -2,18 +2,49 @@ using UnityEngine;
 
 namespace HomeDefense
 {
+    public enum DefenseType
+    {
+        ranged,
+        melee
+    }
+
     public class TargetFinder : MonoBehaviour
     {
-        [SerializeField] private Transform _shooter;
+        [SerializeField] private Transform _hitter;
         [SerializeField] private float _towerRange;
         [SerializeField] private GameObject _ammo;
 
         private Transform _target;
+        private Enemy _enemy;
         private ParticleSystem _ammoParticles;
+        private DefenseType _defenseType;
 
         private void Start()
         {
-            _ammoParticles = _ammo.GetComponent<ParticleSystem>();   
+            if (_ammo != null)
+            {
+                Debug.Log("Ranged selected");
+                SelectRangedAttack(true);
+            }
+            else
+            {
+                Debug.Log("Melee selected");
+                SelectRangedAttack(false);
+            }
+        }
+
+        private void SelectRangedAttack(bool isRanged)
+        {
+            if (isRanged)
+            {
+                _ammoParticles = _ammo.GetComponent<ParticleSystem>();
+                _defenseType = DefenseType.ranged;
+            }
+            else
+            {
+                _ammoParticles = null;
+                _defenseType = DefenseType.melee;
+            }
         }
 
         private void Update()
@@ -28,6 +59,7 @@ namespace HomeDefense
 
             Enemy[] enemies = FindObjectsOfType<Enemy>();
             Transform closestTarget = null;
+            Enemy closestEnemy = null;
             float maxDistance = Mathf.Infinity;
 
             foreach (Enemy enemy in enemies)
@@ -38,10 +70,13 @@ namespace HomeDefense
                 {
                     closestTarget = enemy.transform;
                     maxDistance = targetDistance;
+
+                    closestEnemy = enemy;
                 }
             }
 
             _target = closestTarget;
+            _enemy = closestEnemy;
         }
 
         private void AimTarget()
@@ -52,16 +87,29 @@ namespace HomeDefense
             }
             
             float targetDistance = Vector3.Distance(transform.position, _target.position);
-
             ToggleAttack(targetDistance <= _towerRange);
 
-            _shooter.LookAt(_target);
+            _hitter.LookAt(_target);
         }
 
         private void ToggleAttack(bool isInRange)
         {
-            var ammoEmission = _ammoParticles.emission;
+            switch (_defenseType)
+            {
+                case DefenseType.ranged:
+                    ExecuteShoot(isInRange);
+                    break;
 
+                case DefenseType.melee:
+                    ExecuteMeleeAttack(isInRange);
+                    break;                
+            }
+        }
+
+        private void ExecuteShoot(bool isInRange)
+        {
+            var ammoEmission = _ammoParticles.emission;
+            
             if (!isInRange)
             {
                 ammoEmission.enabled = false;
@@ -69,6 +117,18 @@ namespace HomeDefense
             else
             {
                 ammoEmission.enabled = true;
+            }
+        }
+
+        private void ExecuteMeleeAttack(bool isInRange)
+        {
+            if (!isInRange)
+            {
+                return;
+            }
+            else
+            {
+                _enemy.GetComponent<EnemyHit>().ProcessHit();
             }
         }
     }    
