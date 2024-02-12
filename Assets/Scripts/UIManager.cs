@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HomeDefense
 {
@@ -9,11 +10,13 @@ namespace HomeDefense
         [SerializeField] private TextMeshProUGUI _highScoreText;
 
         private CurrencySystem _currencySystem;
+        private PlayerMovement _playerMovement;
 
         private void Start()
         {
             _currencySystem = FindObjectOfType<CurrencySystem>();
-            
+            _playerMovement = FindObjectOfType<PlayerMovement>();
+
             ChangeHighScore();
             ChangeGoldText();
             _currencySystem.OnCurrencyChange += ChangeGoldText;
@@ -37,6 +40,16 @@ namespace HomeDefense
             }
 
             _highScoreText.text = $"High Score: {PlayerPrefs.GetInt(CurrencySystem.MAX_SCORE_KEY)}";
+        }
+
+        public void SelectMeleeButton()
+        {
+            _playerMovement.DefenseType = DefenseType.melee;
+        }
+
+        public void SelectRangedButton()
+        {
+            _playerMovement.DefenseType = DefenseType.ranged;
         }
     }
 }

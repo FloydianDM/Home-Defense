@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace HomeDefense
@@ -17,10 +18,14 @@ namespace HomeDefense
         private Transform _target;
         private Enemy _enemy;
         private ParticleSystem _ammoParticles;
-        private DefenseType _defenseType;
+        private PlayerMovement _playerMovement;
+        private DefenseType _defenseType;   // storing enum reference for prevent changing correct enum type for each Tower object
 
         private void Start()
         {
+            _playerMovement = FindObjectOfType<PlayerMovement>();
+            _defenseType = _playerMovement.DefenseType;        
+
             if (_ammo != null)
             {
                 Debug.Log("Ranged selected");
@@ -38,12 +43,10 @@ namespace HomeDefense
             if (isRanged)
             {
                 _ammoParticles = _ammo.GetComponent<ParticleSystem>();
-                _defenseType = DefenseType.ranged;
             }
             else
             {
                 _ammoParticles = null;
-                _defenseType = DefenseType.melee;
             }
         }
 

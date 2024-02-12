@@ -4,9 +4,11 @@ namespace HomeDefense
 {
     public class PlayerMovement : MonoBehaviour
     {
-        [SerializeField] private Defense _defense;
+        [SerializeField] private Defense _rangedDefense;
+        [SerializeField] private Defense _meleeDefense;
         
         private GridManager _gridManager;
+        public DefenseType DefenseType;
 
         private void Start()
         {
@@ -24,13 +26,30 @@ namespace HomeDefense
 
             if (isPlaceable)
             {
-                bool isPlaced = _defense.CanCreateDefense(_defense, clickedWorldPosition);
+                bool isPlaced = CanSelectTowerType(clickedWorldPosition);
 
                 if (isPlaced)
                 {
                     _gridManager.PlaceableCoordinatesDict[tilePosition] = false;
                 }
             }
+        }
+
+        private bool CanSelectTowerType(Vector3 clickedWorldPosition)
+        {
+            bool isPlaced = false;
+
+            switch (DefenseType)
+            {
+                case DefenseType.ranged:
+                    isPlaced = _rangedDefense.CanCreateDefense(_rangedDefense, clickedWorldPosition);
+                    break;
+                case DefenseType.melee:
+                    isPlaced = _meleeDefense.CanCreateDefense(_meleeDefense, clickedWorldPosition);
+                    break;
+            }
+
+            return isPlaced;
         }
     }
 }
