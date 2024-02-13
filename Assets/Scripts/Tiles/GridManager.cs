@@ -39,7 +39,7 @@ namespace HomeDefense
                     OnTouched();
                 }
 
-                GetClickedTilePosition();                
+                GetClickedTilePosition();           
             }
             else
             {

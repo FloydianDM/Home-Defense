@@ -8,10 +8,12 @@ namespace HomeDefense
         [SerializeField] private Defense _meleeDefense;
         
         private GridManager _gridManager;
+        private AudioManager _audioManager;
         public DefenseType DefenseType;
 
         private void Start()
         {
+            _audioManager = FindObjectOfType<AudioManager>();
             _gridManager = FindObjectOfType<GridManager>();
 
             _gridManager.OnTouched += InstantiateDefense;
@@ -35,6 +37,7 @@ namespace HomeDefense
 
                 if (isPlaced)
                 {
+                    _audioManager.PlayCreateTowerSFX();
                     _gridManager.PlaceableCoordinatesDict[tilePosition] = false;
                 }
             }

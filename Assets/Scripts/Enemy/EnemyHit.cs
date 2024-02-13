@@ -9,7 +9,9 @@ namespace HomeDefense
         [SerializeField] private int _difficultyMultiplier = 1;
 
         private Enemy _enemy;
+        private EnemyMovement _enemyMovement;
         private int _enemyHitPoints;
+        private AudioManager _audioManager;
 
         private void OnEnable()
         {
@@ -18,7 +20,9 @@ namespace HomeDefense
 
         private void Start()
         {
-            _enemy = GetComponent<Enemy>();   
+            _enemy = GetComponent<Enemy>();
+            _enemyMovement = GetComponent<EnemyMovement>();   
+            _audioManager = FindObjectOfType<AudioManager>();
         }
 
         private void OnParticleCollision(GameObject other)
@@ -37,10 +41,17 @@ namespace HomeDefense
 
             if (_enemyHitPoints <= 0)
             {
-                gameObject.SetActive(false);
-                _maxHitPoint += _difficultyMultiplier;
-                _enemy.AddReward();
+                Die();
             }
+        }
+
+        private void Die()
+        {
+            _enemyMovement.ResetPath();
+            gameObject.SetActive(false);
+            _maxHitPoint += _difficultyMultiplier;
+            _enemy.AddReward();
+            _audioManager.PlayKillSFX();
         }
     }
 }

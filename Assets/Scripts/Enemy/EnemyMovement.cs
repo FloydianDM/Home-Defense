@@ -11,6 +11,7 @@ namespace HomeDefense
 
         private GridManager _gridManager;
         private CurrencySystem _currencySystem;
+        private AudioManager _audioManager;
         private readonly List<Vector2> _enemyPath = new List<Vector2>();
         private Vector3 _cellSize;
 
@@ -18,6 +19,7 @@ namespace HomeDefense
         {   
             _gridManager = FindObjectOfType<GridManager>();
             _currencySystem = FindObjectOfType<CurrencySystem>();
+            _audioManager = FindObjectOfType<AudioManager>();
 
             _cellSize = _gridManager.Map.cellSize;    
 
@@ -58,10 +60,18 @@ namespace HomeDefense
                 _enemyPath.Add(new Vector2(enemyStartPosition.x + nextCell, enemyStartPosition.y));
             }
         }
+
+        public void ResetPath()
+        {
+            _enemyPath.Clear();
+            FindPath();
+        }
       
         public void StealMoney()
         {
             _currencySystem.WithdrawMoney(100);
+            _audioManager.PlayStealSFX();
+            ResetPath();
             gameObject.SetActive(false);            
         }
     }

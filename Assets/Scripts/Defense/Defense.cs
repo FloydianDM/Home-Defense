@@ -9,6 +9,7 @@ namespace HomeDefense
 
         private float _timer = 0;
         private GridManager _gridManager;
+        private AudioManager _audioManager;
 
         private void Start()
         {
