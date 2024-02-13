@@ -38,8 +38,8 @@ namespace HomeDefense
                 {
                     OnTouched();
                 }
-                
-                GetClickedTilePosition();
+
+                GetClickedTilePosition();                
             }
             else
             {
@@ -64,10 +64,11 @@ namespace HomeDefense
         {
             Vector2 touchPosition = Touchscreen.current.primaryTouch.position.ReadValue();
             Vector2 worldPosition = Camera.main.ScreenToWorldPoint(touchPosition);
-            
+                
             Vector3Int gridPosition = _map.WorldToCell(worldPosition);
-            
+                
             return gridPosition;
+           
         }
         
         public Vector3Int GetTilePosition(Vector2 position)

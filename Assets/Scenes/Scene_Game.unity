@@ -199,6 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rangedDefense: {fileID: 3412657853045037351, guid: bde87d825ea2e427f93fc514b837f42f, type: 3}
   _meleeDefense: {fileID: 3412657853045037351, guid: 338e481b8adcc4e3aad9986b594fbbbe, type: 3}
+  DefenseType: 0
 --- !u!4 &62791240
 Transform:
   m_ObjectHideFlags: 0
@@ -333,8 +334,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _goldText: {fileID: 1042563587}
   _highScoreText: {fileID: 0}
-  _meleeButton: {fileID: 2146183182}
-  _rangedButton: {fileID: 2105201434}
 --- !u!1 &267589784
 GameObject:
   m_ObjectHideFlags: 0

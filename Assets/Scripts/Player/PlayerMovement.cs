@@ -20,6 +20,11 @@ namespace HomeDefense
         private void InstantiateDefense()
         {
             Vector3Int tilePosition = _gridManager.GetClickedTilePosition();
+
+            if (!_gridManager.PlaceableCoordinatesDict.ContainsKey(tilePosition))
+            {
+                return;
+            }
             
             bool isPlaceable = _gridManager.PlaceableCoordinatesDict[tilePosition];
             Vector3 clickedWorldPosition = _gridManager.Map.GetCellCenterWorld(tilePosition);
