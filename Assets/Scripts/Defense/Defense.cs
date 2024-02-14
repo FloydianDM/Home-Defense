@@ -9,11 +9,15 @@ namespace HomeDefense
 
         private float _timer = 0;
         private GridManager _gridManager;
-        private AudioManager _audioManager;
+        
 
         private void Start()
         {
             _gridManager = FindObjectOfType<GridManager>();
+
+            CheckEnhancedTime();
+
+            Debug.Log(_lifeTime);
         }
 
         private void Update()
@@ -52,6 +56,11 @@ namespace HomeDefense
 
                 Destroy(gameObject);
             }
+        }
+
+        private void CheckEnhancedTime()
+        {
+            _lifeTime = PlayerPrefs.GetFloat(GameManager.ENHANCED_LIFETIME_KEY, _lifeTime);
         }
     }   
 }

@@ -37,7 +37,7 @@ namespace HomeDefense
 
             if (CurrentBalance <= 0)
             {
-                _gameManager.LoseGame();
+                _gameManager.ProcessGameOver();
             }
         }
 
