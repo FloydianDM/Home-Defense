@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -7,6 +9,8 @@ namespace HomeDefense
     {
         [SerializeField] private TextMeshProUGUI _goldText;
         [SerializeField] private TextMeshProUGUI _highScoreText;
+        [SerializeField] private GameObject _notificationPanel;
+        [SerializeField] private TextMeshProUGUI _notificationText;
 
         private CurrencySystem _currencySystem;
         private PlayerMovement _playerMovement;
@@ -44,11 +48,25 @@ namespace HomeDefense
         public void SelectMeleeButton()
         {
             _playerMovement.DefenseType = DefenseType.melee;
+
+            StartCoroutine(ShowNotificationPanel("Melee selected"));
         }
 
         public void SelectRangedButton()
         {
             _playerMovement.DefenseType = DefenseType.ranged;
+
+            StartCoroutine(ShowNotificationPanel("Ranged selected"));
+        }
+
+        public IEnumerator ShowNotificationPanel(string text)
+        {
+            _notificationPanel.SetActive(true);
+            _notificationText.text = text;
+
+            yield return new WaitForSeconds(1f);
+
+            _notificationPanel.SetActive(false);
         }
     }
 }

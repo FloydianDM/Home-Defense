@@ -12,6 +12,7 @@ namespace HomeDefense
         private GridManager _gridManager;
         private CurrencySystem _currencySystem;
         private AudioManager _audioManager;
+        private UIManager _uiManager;
         private readonly List<Vector2> _enemyPath = new List<Vector2>();
         private Vector3 _cellSize;
 
@@ -20,6 +21,7 @@ namespace HomeDefense
             _gridManager = FindObjectOfType<GridManager>();
             _currencySystem = FindObjectOfType<CurrencySystem>();
             _audioManager = FindObjectOfType<AudioManager>();
+            _uiManager = FindObjectOfType<UIManager>();
 
             _cellSize = _gridManager.Map.cellSize;    
 
@@ -69,6 +71,7 @@ namespace HomeDefense
       
         public void StealMoney()
         {
+            StartCoroutine(_uiManager.ShowNotificationPanel("Stealed!"));
             _currencySystem.WithdrawMoney(100);
             _audioManager.PlayStealSFX();
             ResetPath();
