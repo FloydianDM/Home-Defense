@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HomeDefense
 {
@@ -72,6 +73,13 @@ namespace HomeDefense
         {
             StopAllCoroutines();
             StartCoroutine(ShowNotificationPanel(text));
+        }
+
+        public void ShowTowerHealth(Image timeBarImage, float life, float timer)
+        {
+            float fillRatio = timer / life;
+
+            timeBarImage.fillAmount = fillRatio;
         }
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HomeDefense
 {
@@ -6,13 +7,16 @@ namespace HomeDefense
     {
         [SerializeField] private int _defenseCost = 10;
         [SerializeField] private float _lifeTime = 30f;
+        [SerializeField] private Image _lifebarImage;
 
         private float _timer = 0;
         private GridManager _gridManager;
+        private UIManager _uiManager;
 
         private void Start()
         {
             _gridManager = FindObjectOfType<GridManager>();
+            _uiManager = FindObjectOfType<UIManager>();
 
             CheckEnhancedTime();
 
@@ -54,7 +58,11 @@ namespace HomeDefense
                 _gridManager.PlaceableCoordinatesDict[tilePosition] = true;
 
                 Destroy(gameObject);
+            
+                return;
             }
+
+            _uiManager.ShowTowerHealth(_lifebarImage, _lifeTime, _timer);
         }
 
         private void CheckEnhancedTime()
