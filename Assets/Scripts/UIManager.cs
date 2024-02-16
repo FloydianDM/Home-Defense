@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -67,6 +66,12 @@ namespace HomeDefense
             yield return new WaitForSeconds(1f);
 
             _notificationPanel.SetActive(false);
+        }
+
+        public void ExecuteNotification(string text)
+        {
+            StopAllCoroutines();
+            StartCoroutine(ShowNotificationPanel(text));
         }
     }
 }

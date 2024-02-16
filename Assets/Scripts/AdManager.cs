@@ -68,7 +68,7 @@ namespace HomeDefense
         {
             if (placementId.Equals(_adUnitId))
             {
-                // reward player - add extra time for tower defense
+                // reward player
 
                 FindObjectOfType<GameManager>().SetEnhancedLife(40);
             }
@@ -78,7 +78,7 @@ namespace HomeDefense
         {
             if (placementId.Equals(_adUnitId))
             {
-                // reward player - add extra time for tower defense
+                // reward player
 
                 FindObjectOfType<GameManager>().SetEnhancedLife(60);
             }
@@ -88,7 +88,7 @@ namespace HomeDefense
         {
             if (placementId.Equals(_adUnitId) && showCompletionState.Equals(UnityAdsCompletionState.COMPLETED))
             {
-                // reward player - add extra time for tower defense
+                // reward player
 
                 FindObjectOfType<GameManager>().SetEnhancedLife(50);
             }

@@ -71,7 +71,7 @@ namespace HomeDefense
       
         public void StealMoney()
         {
-            StartCoroutine(_uiManager.ShowNotificationPanel("Stealed!"));
+            _uiManager.ExecuteNotification("Stealed!");
             _currencySystem.WithdrawMoney(100);
             _audioManager.PlayStealSFX();
             ResetPath();
