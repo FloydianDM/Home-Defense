@@ -35,6 +35,13 @@ namespace HomeDefense
             {
                 int waypointIndex = _enemyPath.IndexOf(waypoint);
 
+                if (waypointIndex == _enemyPath.Count - 1)  //  end of the path, steal money if there isn't any end flag before the path finishes
+                {
+                    StealMoney();
+
+                    break; 
+                }
+
                 Vector2 startPosition = waypoint;
                 Vector2 endPosition = _enemyPath[waypointIndex + 1];
 
